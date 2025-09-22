@@ -53,23 +53,42 @@ async function redisDataStructures(){
       //sorted sets
       // ZADD, ZRANGE, ZRANK, ZREM
 
-      await client.zAdd('cart', [
-         {
-            score : 100, value : 'cart 1'
-         },
-         {
-            score : 150, value : 'cart 2'
-         },
-         {
-            score : 10, value: 'cart 3'
-         }
-      ])
+      // await client.zAdd('cart', [
+      //    {
+      //       score : 100, value : 'cart 1'
+      //    },
+      //    {
+      //       score : 150, value : 'cart 2'
+      //    },
+      //    {
+      //       score : 10, value: 'cart 3'
+      //    }
+      // ])
 
-      const getTopCartItems = await client.ZRange("cart", 0, -1);
-      console.log(getTopCartItems);
+      // const getTopCartItems = await client.ZRange("cart", 0, -1);
+      // console.log(getTopCartItems);
 
-      const extractAllCartItemsWithScore = await client.zRangeWithScores('cart', 0, -1)
-      console.log(extractAllCartItemsWithScore);
+      // const extractAllCartItemsWithScore = await client.zRangeWithScores('cart', 0, -1)
+      // console.log(extractAllCartItemsWithScore);
+
+      // const cartTwoRank = await client.zRank("cart","cart 2");
+      // console.log(cartTwoRank);
+
+
+      //hashes -> HSET, HGET, HGETALL, HDEL
+
+      await client.hset('product:1',{
+          name : 'product 1 name',
+          description : 'product one description',
+          rating : '5'
+      })
+      
+      const getProductRating = await client.hGet('product:1','rating');
+      console.log(getProductRating);
+      
+      const getProductDetails = await client.hGetAll('product:1');
+      console.log(getProductDetails);
+
       
 
      }catch(e){
